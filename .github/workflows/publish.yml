@@ -40,20 +40,20 @@ jobs:
 
       - name: Download task definition
         run: |
-          aws ecs describe-task-definition --task-definition helloworld --query taskDefinition > task-definition.json
+          aws ecs describe-task-definition --task-definition dome9-goni-td --query taskDefinition > task-definition.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: dome9-goni-td
+          container-name: dome9-goni-container
           image: docker.io/gonigo/dome9:sha-${{ steps.vars.outputs.sha_short }}
 
       - name: Deploy Amazon ECS task definition
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: dev-hw
-          cluster: dev
+          service: dome9-goni-svc
+          cluster: dome9-goni-cluster
           wait-for-service-stability: true
