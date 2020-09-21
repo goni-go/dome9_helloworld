@@ -47,7 +47,7 @@ jobs:
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
-          container-name: dev-helloworld
+          container-name: dome9-goni-td
           image: docker.io/gonigo/dome9:sha-${{ steps.vars.outputs.sha_short }}
 
       - name: Deploy Amazon ECS task definition
